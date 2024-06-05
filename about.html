@@ -1,61 +1,334 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About</title>
+    <title>Department Study Space</title>
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #d7ebe0 ;
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 
+        :root {
+            --color-bg1: rgb(8, 10, 15);
+            --color-bg2: rgb(0, 17, 32);
+            --color1: 18, 113, 255;
+            --color2: 107, 74, 255;
+            --color3: 100, 100, 255;
+            --color4: 50, 160, 220;
+            --color5: 80, 47, 122;
+            --color-interactive: 140, 100, 255;
+            --circle-size: 80%;
+            --blending: hard-light;
         }
+
+        * {
+            margin: 0;
+            padding: 0;
+            outline: none;
+            list-style: none;
+            text-decoration: none;
+            box-sizing: border-box;
+            color: #FFF;
+            background: transparent;
+            border: none;
+        }
+
+        html, body {
+            font-family: 'Dongle', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            background: #FFF;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+        }
+
+        h1, h1, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .card {
+            position: absolute;
+            z-index: 10;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            user-select: none;
+            max-width: 1000px;
+            padding: 20px;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            box-shadow: 0 4px 90px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .card:before {
+            content: "";
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgb(255,255,255);
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 34%, rgba(255,255,255,1) 89%, rgba(255,255,255,0) 100%);
+            opacity: 0.3;
+            filter: blur(.5px);
+            mix-blend-mode: hard-light;
+        }
+
+        .noise {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+            opacity: 0.1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            text-shadow: -3px 0px 2px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        @keyframes moveInCircle {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes moveVertical {
+            0% { transform: translateY(-50%); }
+            50% { transform: translateY(50%); }
+            100% { transform: translateY(-50%); }
+        }
+
+        @keyframes moveHorizontal {
+            0% { transform: translateX(-50%) translateY(-10%); }
+            50% { transform: translateX(50%) translateY(10%); }
+            100% { transform: translateX(-50%) translateY(-10%); }
+        }
+
+        .gradient-bg {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+            top: 0;
+            left: 0;
+        }
+
+        .gradient-bg .svgBlur {
+            display: none;
+        }
+
+        .gradient-bg .noiseBg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            mix-blend-mode: soft-light;
+            opacity: 0.3;
+        }
+
+        .gradient-bg .gradients-container {
+            filter: url(#goo) blur(40px);
+            width: 100%;
+            height: 100%;
+        }
+
+        .gradient-bg .g1 {
+            position: absolute;
+            background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
+            mix-blend-mode: var(--blending);
+            width: var(--circle-size);
+            height: var(--circle-size);
+            top: calc(50% - var(--circle-size) / 2);
+            left: calc(50% - var(--circle-size) / 2);
+            transform-origin: center center;
+            animation: moveVertical 30s ease infinite;
+            opacity: 1;
+        }
+
+        .gradient-bg .g2 {
+            position: absolute;
+            background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
+            mix-blend-mode: var(--blending);
+            width: var(--circle-size);
+            height: var(--circle-size);
+            top: calc(50% - var(--circle-size) / 2);
+            left: calc(50% - var(--circle-size) / 2);
+            transform-origin: calc(50% - 400px);
+            animation: moveInCircle 20s reverse infinite;
+            opacity: 1;
+        }
+
+        .gradient-bg .g3 {
+            position: absolute;
+            background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
+            mix-blend-mode: var(--blending);
+            width: var(--circle-size);
+            height: var(--circle-size);
+            top: calc(50% - var(--circle-size) / 2 + 200px);
+            left: calc(50% - var(--circle-size) / 2 - 500px);
+            transform-origin: calc(50% + 400px);
+            animation: moveInCircle 40s linear infinite;
+            opacity: 1;
+        }
+
+        .gradient-bg .g4 {
+            position: absolute;
+            background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
+            mix-blend-mode: var(--blending);
+            width: var(--circle-size);
+            height: var(--circle-size);
+            top: calc(50% - var(--circle-size) / 2);
+            left: calc(50% - var(--circle-size) / 2);
+            transform-origin: calc(50% - 200px);
+            animation: moveHorizontal 40s ease infinite;
+            opacity: 0.7;
+        }
+
+        .gradient-bg .g5 {
+            position: absolute;
+            background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
+            mix-blend-mode: var(--blending);
+            width: calc(var(--circle-size) * 2);
+            height: calc(var(--circle-size) * 2);
+            top: calc(50% - var(--circle-size));
+            left: calc(50% - var(--circle-size));
+            transform-origin: calc(50% - 800px) calc(50% + 200px);
+            animation: moveInCircle 20s ease infinite;
+            opacity: 1;
+        }
+
+        .gradient-bg .interactive {
+            position: absolute;
+            background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
+            mix-blend-mode: var(--blending);
+            width: 100%;
+            height: 100%;
+            top: -50%;
+            left: -50%;
+            opacity: 0.7;
+        }
+
+        .semester-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 16px;
+        }
+
+        .semester-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            width: calc(50% - 32px);
+            margin: 8px 0;
+        }
+
+        .semester-box a {
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
         header {
-             background-color: #550384;
-             color: #bbbbbb;
-             padding: 10px;
-             text-align: center;
-             display: flex;
-             justify-content: space-between;
-             align-items: center;
-             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-         }
- 
-         .logo {
-             font-size: 16px;
-             font-weight: bold;
-         }
- 
-         nav ul {
-             list-style: none;
-             padding: 0;
-             margin: 0;
-         }
- 
-         nav ul li {
-             display: inline;
-             margin-right: 20px;
-         }
- 
-         nav ul li:last-child {
-             margin-right: 0;
-         }
- 
-         nav ul li a {
-             color: #fff;
-             text-decoration: none;
-             transition: color 0.3s ease;
-         }
- 
-         nav ul li a:hover {
-             color: #f0f0f0;
-         }
-         <!---->
-         
- 
-     </style>
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: #25013fea;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .website-name {
+            font-size: 1rem;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 16px;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            color: rgb(249, 244, 244);
+            text-decoration: none;
+            padding: 8px 16px;
+        }
+        
+
+        nav ul li a:hover {
+            background-color: #1b023a09;
+            border-radius: 4px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position:absolute;
+            background-color: #550384;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #1d0238;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #e1cdf2;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -64,12 +337,212 @@
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
+                
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">Pages</a>
+                    <div class="dropdown-content">
+                        <a href="semester1.html">Semester 1</a>
+                        <a href="semester2.html">Semester2</a>
+                        <a href="semester3.html">Semester 3</a>
+                        <a href="semester4.html">Semester 4</a>
+                        <a href="semester5.html">Semester 5</a>
+                        <a href="semester6.html">Semester 6</a>
+                        <a href="semester7.html">Semester 7</a>
+                        <a href="semester8.html">Semester 8</a>
+                        <a href="syllabus.html">Syllabus</a>
+                    </div>
+                </li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
-    
-   <p>REC</p> 
+    <div class="card">
+        <svg viewBox="0 0 100% 100%" xmlns='http://www.w3.org/2000/svg' class="noise">
+            <filter id='noiseFilter'>
+                <feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='6' stitchTiles='stitch' />
+            </filter>
+            <rect width='100%' height='100%' preserveAspectRatio="xMidYMid meet" filter='url(#noiseFilter)' />
+        </svg>
+
+        
+        <div class="container">
+            <h1>About Us</h1>
+            <p>Welcome to REC AIML Department Study Space! We are dedicated to providing a comprehensive learning environment
+                for students pursuing studies in Artificial Intelligence and Machine Learning. Our aim is to foster
+                excellence in education, research, and innovation in the field of AI and ML.</p>
+            <p>At REC AIML Department Study Space, students have access to state-of-the-art facilities, expert faculty
+                members, and a vibrant community of learners. We offer a rigorous academic curriculum combined with
+                hands-on practical experience to prepare students for the challenges and opportunities in the rapidly
+                evolving field of AI and ML.</p>
+            <h2>Our Mission</h2>
+            <p>Our mission is to empower students with the knowledge, skills, and mindset required to become leaders and
+                innovators in the field of Artificial Intelligence and Machine Learning. We strive to create a dynamic
+                learning environment that encourages curiosity, critical thinking, and collaboration.</p>
+            <h2>Why Choose Us?</h2>
+            <ul>
+                <li>We offer a comprehensive curriculum covering the latest developments in AI and ML.</li>
+                <li>Our faculty members are experts in their fields and are committed to the success of our students.</li>
+                <li>We provide hands-on experience through projects, internships, and industry collaborations.</li>
+                <li>Our state-of-the-art facilities and resources support research and innovation in AI and ML.</li>
+                <li>We foster a supportive and inclusive community that values diversity and creativity.</li>
+            </ul>
+        </div>
+        <footer>
+            &copy; 2024 REC AIML Department Study Space. All rights reserved.
+        </footer>
+    </div>
+    <div class="gradient-bg">
+        <div class="noiseBg"></div>
+        <div class="gradients-container">
+            <div class="g1"></div>
+            <div class="g2"></div>
+            <div class="g3"></div>
+            <div class="g4"></div>
+            <div class="g5"></div>
+            <div class="interactive"></div>
+        </div>
+    </div>
 </body>
 </html>
+
+
+
+
+
+<!--
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - REC AIML Department Study Space</title>
+   <--
+   <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #4a2272;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #411867;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+        }
+
+        nav a:hover {
+            background-color: #ba90ef;
+            border-radius: 5px;
+        }
+
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .container p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .container img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .container ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container ul li {
+            margin-bottom: 10px;
+        }
+
+        .container ul li:before {
+            content: "➤";
+            margin-right: 5px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>REC AIML Department Study Space</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="syllabus.html">Syllabus</a>
+    </nav>
+    <div class="container">
+        <h1>About Us</h1>
+        <p>Welcome to REC AIML Department Study Space! We are dedicated to providing a comprehensive learning environment
+            for students pursuing studies in Artificial Intelligence and Machine Learning. Our aim is to foster
+            excellence in education, research, and innovation in the field of AI and ML.</p>
+        <p>At REC AIML Department Study Space, students have access to state-of-the-art facilities, expert faculty
+            members, and a vibrant community of learners. We offer a rigorous academic curriculum combined with
+            hands-on practical experience to prepare students for the challenges and opportunities in the rapidly
+            evolving field of AI and ML.</p>
+        <h3>Our Mission</h3>
+        <p>Our mission is to empower students with the knowledge, skills, and mindset required to become leaders and
+            innovators in the field of Artificial Intelligence and Machine Learning. We strive to create a dynamic
+            learning environment that encourages curiosity, critical thinking, and collaboration.</p>
+        <h3>Why Choose Us?</h3>
+        <ul>
+            <li>We offer a comprehensive curriculum covering the latest developments in AI and ML.</li>
+            <li>Our faculty members are experts in their fields and are committed to the success of our students.</li>
+            <li>We provide hands-on experience through projects, internships, and industry collaborations.</li>
+            <li>Our state-of-the-art facilities and resources support research and innovation in AI and ML.</li>
+            <li>We foster a supportive and inclusive community that values diversity and creativity.</li>
+        </ul>
+    </div>
+    <footer>
+        &copy; 2024 REC AIML Department Study Space. All rights reserved.
+    </footer>
+</body>
+
+</html>
+
+-->
